@@ -30,9 +30,8 @@ class PageTaskList(Base):
         # 点击任务小球
         self.click_ele(ID=task.taskBall)
 
-    # 点击任务列表-点击搜索框-输入搜索内容-点击搜索
-    def page_send_search(self, search):
-        self.pageHome.page_click_task_button()  # 点击任务按钮
-        self.click_ele(ID=task.marsID)  # 点击莫斯一下
-        self.send_key(text=search, ID=task.searchID)  # 输入搜索内容
-        self.click_ele(ID=task.searchButtonID)  # 点击搜索按钮
+    def page_click_search(self, text):
+        # 点击莫斯一下-搜索任务
+        self.click_ele(task.marsID)
+        self.send_key(text=text, ID=task.searchID)
+        self.click_ele(task.searchButtonID)

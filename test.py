@@ -1,3 +1,5 @@
-from base.base import Base
+import uiautomator2
 
-Base().restart_app()
+driver = uiautomator2.connect('926QADV7222QM')
+# print(driver.app_list())
+print(driver.__sizeof__())

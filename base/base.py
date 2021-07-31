@@ -7,7 +7,7 @@ class Base:
     def __init__(self):
         self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
         self.driver.debug = False
-
+        self.packageName = 'com.mj.app.marsreport.pre'
     # 获取元素属性ID
     def get_ele(self, ID=None, xpath=None, text=None, index=0):
         if ID:
@@ -42,7 +42,7 @@ class Base:
 
     # 判断元素是否存在 返回bool
     def exists_ele(self, ID=None, xpath=None, text=None):
-        return self.get_ele(ID=ID, xpath=xpath, text=text).exists
+        return self.get_ele(ID=ID, xpath=xpath, text=text).exists(timeout=5)
 
     # 返回元素文本
     def get_text(self, ID=None, xpath=None):
@@ -50,9 +50,9 @@ class Base:
 
     # 重启app
     def restart_app(self):
-        self.driver.app_stop('com.mj.app.marsreport.pre')
+        self.driver.app_stop(self.packageName)
         time.sleep(1)
-        self.driver.app_start('com.mj.app.marsreport.pre')
+        self.driver.app_start(self.packageName)
         self.click_ele(ID='com.mj.app.marsreport.pre:id/close')
 
     # 截图

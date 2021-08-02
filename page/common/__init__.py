@@ -2,10 +2,12 @@
 
 photoID = 'com.mj.app.marsreport.pre:id/check_view'  # 照片选择框
 useButtonID = 'com.mj.app.marsreport.pre:id/button_apply'  # 使用
+camaraButtonID = 'com.mj.app.marsreport.pre:id/camera'  # 拍照按钮
+clickTakePhotoID = 'com.mj.app.marsreport.pre:id/whiteBottom'  # 点击拍照按钮
 """明细页面元素"""
 detailStatusID = 'com.mj.app.marsreport.pre:id/item_label'  # 明细状态
 detailSelectID = 'com.mj.app.marsreport.pre:id/isSelect'  # 批量选择明细框
-
+detaiAddButtonID = 'com.mj.app.marsreport.pre:id/cgi_create_detail'  # 添加明细按钮
 """编辑PL页面元素"""
 numberID = 'com.mj.app.marsreport.pre:id/quantity'  # 件数输入框
 volumeID = 'com.mj.app.marsreport.pre:id/volume'  # 体积输入框

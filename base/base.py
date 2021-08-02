@@ -1,13 +1,13 @@
-import time
 import uiautomator2
+from common.common import unlock_phone
 
 
 class Base:
 
     def __init__(self):
-        self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
-        self.driver.debug = False
+        self.driver = uiautomator2.connect('192.168.1.162')  # b182d0da,SQRNW17927003213,926QADV7222QM
         self.packageName = 'com.mj.app.marsreport.pre'
+
     # 获取元素属性ID
     def get_ele(self, ID=None, xpath=None, text=None, index=0):
         if ID:
@@ -50,9 +50,7 @@ class Base:
 
     # 重启app
     def restart_app(self):
-        self.driver.app_stop(self.packageName)
-        time.sleep(1)
-        self.driver.app_start(self.packageName)
+        self.driver.app_start(self.packageName, stop=True)
         self.click_ele(ID='com.mj.app.marsreport.pre:id/close')
 
     # 截图

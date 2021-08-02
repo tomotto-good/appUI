@@ -1,3 +1,5 @@
+import time
+
 from base.base import Base
 from page import common
 from page import foot
@@ -27,7 +29,18 @@ class Common(Base):
             self.get_ele(ID=common.photoID)[i].click()
         self.click_ele(ID=common.useButtonID)
 
-    """明细列表页面"""
+    # 相机按钮
+    def page_common_click_camara(self):
+        self.click_ele(common.camaraButtonID)
+
+    # 点击拍照按钮-拍照
+    def page_common_take_photo(self):
+        self.click_ele(common.clickTakePhotoID)
+
+    def page_common_take_video(self):
+        time.sleep(2)
+        self.driver.long_click(0.502, 0.844, duration=4)
+        """明细列表页面"""
 
     # 获取明细状态
     def page_common_get_detail_status(self, statusIndex):
@@ -63,6 +76,33 @@ class Common(Base):
     def page_common_detail_supplier_screen(self, supplier):
         self.click_ele(text='厂商')
         self.click_ele(text=supplier)
+
+    # 点击添加明细按钮
+    def page_common_detail_add_detail_button(self):
+        self.click_ele(ID=common.detaiAddButtonID)
+
+    # 新增明细
+    def page_common_detail_add_detail(self, detailMark, detailName, length, width, height, volume, weight, style):
+        """
+
+        :param detailMark: 件号
+        :param detailName: 货名
+        :param length: 长
+        :param width: 宽
+        :param height: 高
+        :param volume: 体积
+        :param weight: 重量
+        :param style:  包装形式
+        """
+        self.page_common_detail_add_detail_button()
+        self.send_key(text=detailMark, ID='com.mj.app.marsreport.pre:id/detail_mark')  # 输入件号
+        self.send_key(text=detailName, ID='com.mj.app.marsreport.pre:id/detail_name')  # 输入品名
+        self.send_key(text=length, ID='com.mj.app.marsreport.pre:id/import_length')  # 输入长
+        self.send_key(text=width, ID='com.mj.app.marsreport.pre:id/import_width')  # 输入宽
+        self.send_key(text=height, ID='com.mj.app.marsreport.pre:id/import_height')  # 输入高
+        self.send_key(text=volume, ID='com.mj.app.marsreport.pre:id/importVolume')  # 输入体积
+        self.send_key(text=weight, ID='com.mj.app.marsreport.pre:id/importWeight')  # 输入重量
+        self.send_key(text=style, ID='com.mj.app.marsreport.pre:id/packingStyle')  # 输入包装形式
 
     """业务组装"""
 

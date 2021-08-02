@@ -8,6 +8,7 @@ from page.loading.main import PageMain
 from page.common.common import Common
 from page.loading.shift import PageShift
 from page.loading.lps import PageLps
+from page.common.pl import PL
 from common.getPath import GetPath
 
 
@@ -30,11 +31,13 @@ class TestLoading(unittest.TestCase):
         cls.path = GetPath()
         print('导入lps文件..')
         cls.lps = PageLps()
+        print('导入pl文件..')
+        cls.pl = PL()
         print('导入common文件..')
         cls.common = Common()
 
     def tearDown(self) -> None:
-        pass
+        self.common.restart_app()  # 重启app
 
     def test_loading_001(self):
         """导入PL"""
@@ -52,6 +55,9 @@ class TestLoading(unittest.TestCase):
         """装前货况-其他照片"""
         try:
             print('---test_loading_002---')
+            self.pageHome.page_click_task_button()
+            self.pageTaskList.page_click_search('uiLoading')  # 搜索任务
+            self.common.page_common_click_task_name('监装')  # 点击任务名称进入任务
             self.common.page_common_import_picture(2)
             time.sleep(1)
             self.common.driver.swipe_ext('up', 0.1)  # 添加异常按钮被遮挡，需要上滑
@@ -60,55 +66,52 @@ class TestLoading(unittest.TestCase):
             self.main.page_send_photo_remark('装前货况其他照片')
             time.sleep(1)
             self.common.driver.swipe_ext('down', 1)  # 恢复页面
+            """装前货况-BL整体照片"""
+            self.main.page_click_bl_front_select('清单1')  #
+            self.common.page_common_import_picture(2)
+            time.sleep(1)
+            self.common.driver.swipe_ext('up', 0.1)  # 添加异常按钮被遮挡，需要上滑
+            self.main.page_click_add_abnormal()  # 点击添加异常按钮
+            self.main.click_ele(text='变形')  # 选择异常
+            self.main.page_send_photo_remark('装前货况BL整体照片')
+            time.sleep(1)
+            self.common.driver.swipe_ext('down', 1)  # 恢复页面
+            """装前货况-明细照片"""
+            self.main.page_click_detail_front_select('鹏1')  # 选择件号
+            self.common.page_common_import_picture(2)
+            time.sleep(1)
+            self.common.driver.swipe_ext('up', 0.1)  # 添加异常按钮被遮挡，需要上滑
+            self.main.page_click_add_abnormal()  # 点击添加异常按钮
+            self.main.click_ele(text='破损')  # 选择异常
+            self.main.page_send_photo_remark('装前货况明细照片')
+
         except Exception as e:
             print(e)
 
     def test_loading_003(self):
-        """装前货况-BL整体照片"""
-        print('---test_loading_003---')
-        self.main.page_click_bl_front_select('清单1')  #
-        self.common.page_common_import_picture(2)
-        time.sleep(1)
-        self.common.driver.swipe_ext('up', 0.1)  # 添加异常按钮被遮挡，需要上滑
-        self.main.page_click_add_abnormal()  # 点击添加异常按钮
-        self.main.click_ele(text='变形')  # 选择异常
-        self.main.page_send_photo_remark('装前货况BL整体照片')
-        time.sleep(1)
-        self.common.driver.swipe_ext('down', 1)  # 恢复页面
-
-    def test_loading_004(self):
-        """装前货况-明细照片"""
-        print('---test_loading_004---')
-        self.main.page_click_detail_front_select('鹏1')  # 选择件号
-        self.common.page_common_import_picture(2)
-        time.sleep(1)
-        self.common.driver.swipe_ext('up', 0.1)  # 添加异常按钮被遮挡，需要上滑
-        self.main.page_click_add_abnormal()  # 点击添加异常按钮
-        self.main.click_ele(text='破损')  # 选择异常
-        self.main.page_send_photo_remark('装前货况明细照片')
-
-    def test_loading_005(self):
         """船舶概况-整体照片"""
-        print('---test_loading_005---')
-        time.sleep(1)
+        print('---test_loading_003---')
+        self.pageHome.page_click_task_button()
+        self.pageTaskList.page_click_search('uiLoading')  # 搜索任务
+        self.common.page_common_click_task_name('监装')  # 点击任务名称进入任务
         self.main.driver.drag(0.887, 0.705, 0.088, 0.082)  # 将IM控件拖拽出去
         self.main.click_ele(text='船舶概况')
         self.common.page_common_import_picture(2)  # 从相册导入照片
         self.main.page_click_add_abnormal()  # 点击添加异常按钮
         self.main.page_send_photo_remark('船舶概况整体照片')
-
-    def test_loading_006(self):
         """船舶概况-舱位照片"""
-        print('---test_loading_006---')
         self.main.page_click_vessel_select_hatch('No.1')  # 选择舱口
         self.main.page_click_vessel_select_space('舱盖　 No.1')  # 选择舱位
         self.common.page_common_import_picture(2)
         self.main.page_click_add_abnormal()  # 点击添加异常按钮
         self.main.page_send_photo_remark('船舶概况舱位照片')
 
-    def test_loading_007(self):
+    def test_loading_004(self):
         """装载过程-舱位整体照片"""
-        print('---test_loading_007---')
+        print('---test_loading_004---')
+        self.pageHome.page_click_task_button()
+        self.pageTaskList.page_click_search('uiLoading')  # 搜索任务
+        self.common.page_common_click_task_name('监装')  # 点击任务名称进入任务
         self.main.click_ele(text='装载过程')
         self.common.page_common_import_picture(2)  # 从相册导入照片
         time.sleep(1)
@@ -118,8 +121,6 @@ class TestLoading(unittest.TestCase):
         self.main.page_send_photo_remark('装载过程舱位整体照片')
         time.sleep(1)
         self.common.driver.swipe_ext('down', 1)
-
-    def test_loading_008(self):
         """装载过程-BL整体照片"""
         try:
             print('---test_loading_008---')
@@ -134,10 +135,7 @@ class TestLoading(unittest.TestCase):
             self.common.driver.swipe_ext('down', 1)
         except Exception as e:
             print(e)
-
-    def test_loading_009(self):
         """装载过程-明细照片"""
-        print('---test_loading_009---')
         self.main.page_click_detail_front_select('龙1')  # 选择件号
         self.common.page_common_import_picture(2)  # 从相册导入照片
         time.sleep(1)
@@ -146,16 +144,25 @@ class TestLoading(unittest.TestCase):
         self.main.click_ele(text='油污')
         self.main.page_send_photo_remark('装载过程明细照片')
 
-    def test_loading_010(self):
+    def test_loading_005(self):
         """绑扎材料"""
-        print('---test_loading_010---')
+        print('---test_loading_005---')
+        self.pageHome.page_click_task_button()
+        self.pageTaskList.page_click_search('uiLoading')  # 搜索任务
+        self.common.page_common_click_task_name('监装')  # 点击任务名称进入任务
         self.main.click_ele(text='绑扎材料')
         self.main.click_ele(text='6*8*100CM')  # 选择规格
+        time.sleep(1)
+        self.main.click_xy(0.798, 0.367)  # 点击空白处
+
         self.common.page_common_import_picture(2)  # 从相册导入照片
 
-    def test_loading_011(self):
+    def test_loading_006(self):
         """录入工班数据"""
-        print('---test_loading_011---')
+        print('---test_loading_006---')
+        self.pageHome.page_click_task_button()
+        self.pageTaskList.page_click_search('uiLoading')  # 搜索任务
+        self.common.page_common_click_task_name('监装')  # 点击任务名称进入任务
         self.main.page_click_create_shift()  # 新建工班
         self.shift.page_send_shift_name('工班1')  # 录入工班名称
         self.shift.click_ele(text='确定')
@@ -175,12 +182,30 @@ class TestLoading(unittest.TestCase):
                     print("工班1-清单1件数/体积/重量： ", self.shift.page_get_shift_data())
                     self.shift.driver.press('back')
                     time.sleep(2)
+                    """监装-舱口列表-装载数据"""
+                    print('---test_loading_012---')
+                    self.main.click_ele(text='装载数据')
+                    self.assertEqual('23pkgs/25.0m³/27.0t', self.lps.page_get_real_total())
+                    self.assertEqual('14pkgs/15.53m³/27.77t', self.lps.page_get_pre_total())
         else:
             print('当前页面不在工班积载详情页')
 
-    def test_loading_012(self):
-        """监装-舱口列表-装载数据"""
-        print('---test_loading_012---')
-        self.main.click_ele(text='装载数据')
-        self.assertEqual('23pkgs/25.0m³/27.0t', self.lps.page_get_real_total())
-        self.assertEqual('14pkgs/15.53m³/27.77t', self.lps.page_get_pre_total())
+    @unittest.skip('没时间')
+    def test_loading_007(self):
+        """验证件毛体功能"""
+        print('---test_loading_007---')
+        try:
+            self.common.page_common_go_pl_list('uiLoading')  # 进入PL列表
+            self.pl.page_pl_click_create()  # 点击新增
+            self.pl.page_pl_send_pl_number('清单2')  # 输入提单号
+            self.pl.page_pl_send_data(11, 12, 13)  # 输入件数/体积/重量
+            self.pl.click_ele(text='确定')
+            time.sleep(1)
+            self.pl.driver.swipe_ext('down', 1)  # 上滑刷新
+            time.sleep(1)
+            self.pl.page_pl_click_pl_right_button(1)  # 点击清单2右上角按钮
+            self.pl.page_pl_click_edit()  # 点击编辑按钮
+            self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
+            print(self.common.driver.toast.get_message())  # 打印提示信息
+        except Exception as e:
+            print(e)

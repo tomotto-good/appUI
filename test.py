@@ -1,5 +1,3 @@
 import uiautomator2
 
-driver = uiautomator2.connect('926QADV7222QM')
-# print(driver.app_list())
-print(driver.__sizeof__())
+uiautomator2.connect_wifi('192.168.1.162')

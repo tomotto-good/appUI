@@ -7,6 +7,7 @@ from page.collection.detailList import DetailList
 from page.common.pl import PL
 from page.common.common import Common
 from common.getPath import GetPath
+from common.common import unlock_phone
 
 
 class TestCollection(unittest.TestCase):
@@ -26,13 +27,14 @@ class TestCollection(unittest.TestCase):
         cls.common = Common()
         print('导入pl文件..')
         cls.pl = PL()
+        unlock_phone(driver=cls.login.driver)  # 判断设备锁状态
         print('重启app..')
         cls.login.restart_app()
         print('判断当前app是否在登录页面...')
         cls.login.page_judge_login()  # 判断app是否在登陆页面
 
     def tearDown(self) -> None:
-        self.login.restart_app()  # 重启app
+        self.common.restart_app()  # 重启app
 
     def test_collection_001(self):
         """集港明细"""
@@ -49,7 +51,6 @@ class TestCollection(unittest.TestCase):
             time.sleep(1)
             self.detailList.page_click_save_button()
             self.assertEqual('已完成', self.common.page_common_get_detail_status(0))
-            self.common.save_picture(self.path.imagePath + r'\collection\coll.jpg')  # 截图
             time.sleep(1)
 
             """异常集港"""
@@ -60,7 +61,6 @@ class TestCollection(unittest.TestCase):
             self.common.page_common_click_detail_abnormal(abnormal='破损')
             self.detailList.driver(text='保存').click()
             time.sleep(1)
-            self.common.save_picture(self.path.imagePath + r'\collection\collAbnormal.jpg')  # 截图
             self.assertEqual('异常', self.common.page_common_get_detail_status(1))
 
             """批量集港"""
@@ -73,7 +73,6 @@ class TestCollection(unittest.TestCase):
             self.detailList.click_ele(text='确定')
             self.detailList.click_ele(text='确定')
             time.sleep(1)
-            self.common.save_picture(self.path.imagePath + r'\collection\collBatch.jpg')  # 截图
 
         except Exception as e:
             print(e)
@@ -117,4 +116,26 @@ class TestCollection(unittest.TestCase):
         self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
         print(self.common.driver.toast.get_message())  # 打印提示信息
 
+    def test_collection_005(self):
+        """整体照片"""
+        print('---test_collection_005---')
+        try:
+            self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
+            self.pl.page_pl_click_pl_name('清单2')  # 进入明细列表
+            self.pl.click_ele(text='整体照片')
+            self.common.page_common_click_camara()  # 点击拍照按钮
+            self.common.page_common_take_photo()  # 拍一张
+            self.common.page_common_take_video()  # 录像
+        except Exception as e:
+            print(e)
 
+    def test_collection_006(self):
+        """新增明细"""
+        print('---test_collection_005---')
+        self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
+        self.pl.page_pl_click_pl_name('清单2')  # 进入明细列表
+        self.common.page_common_detail_add_detail('新增明细001', '角钢、紧固件 Angle steel, fasteners', 1000, 1100, 1200, 1.32, 2,
+                                                  '铁箱 IRON CASE')
+        self.common.click_ele(text='确定')
+        self.common.page_common_import_picture(2)  # 从相册导入照片
+        self.common.click_ele(text='保存')

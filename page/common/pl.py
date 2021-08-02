@@ -42,3 +42,5 @@ class PL(Base):
     # 点击编辑按钮
     def page_pl_click_edit(self):
         self.click_ele(xpath=common.editXpath)
+
+

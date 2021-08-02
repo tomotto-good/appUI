@@ -25,7 +25,7 @@ class TestFoot(unittest.TestCase):
         cls.common = Common()
 
     def tearDown(self) -> None:
-        self.detailList.restart_app()  # 重启app
+        self.common.restart_app()  # 重启app
 
     def test_foot_001(self):
         """正常/异常/批量打尺"""
@@ -44,10 +44,7 @@ class TestFoot(unittest.TestCase):
             self.detailList.page_detail_ok_button()
             status = self.common.page_common_get_detail_status(0)
             self.assertEqual(status, '已完成')
-        except Exception:
-            raise
 
-        try:
             self.common.page_common_click_detail_name(detailName='龙1')  # 进入明细详情
             self.detailList.page_detail_add_length_width_height()  # 长宽高各增加10mm
             self.detailList.page_detail_input_address(address='uiAddressTest002')  # 输入场地
@@ -58,20 +55,19 @@ class TestFoot(unittest.TestCase):
             self.detailList.page_detail_ok_button()
             status = self.common.page_common_get_detail_status(1)
             self.assertEqual(status, '异常')
+            while 1 == 1:
+                if self.detailList.exists_ele(text='龙3'):
+                    self.detailList.page_detail_click_batch_foot()  # 点击批量打尺
+                    break
+                else:
+                    self.detailList.driver.swipe_ext('up', 1)
+            self.common.page_common_detail_select_all(2)  # 选择批量打尺的件数
+            self.detailList.page_detail_click_batch_foot()  # 点击批量打尺
+            self.detailList.driver(text='确定').click()  # 点击确定
+            self.detailList.driver(text='确定').click()  # 二次提示--点击确定
+            self.detailList.driver(text='取消').click()  # 点击取消
         except AssertionError as e:
-            return e
-
-        while 1 == 1:
-            if self.detailList.exists_ele(text='龙3'):
-                self.detailList.page_detail_click_batch_foot()  # 点击批量打尺
-                break
-            else:
-                self.detailList.driver.swipe_ext('up', 1)
-        self.common.page_common_detail_select_all(2)  # 选择批量打尺的件数
-        self.detailList.page_detail_click_batch_foot()  # 点击批量打尺
-        self.detailList.driver(text='确定').click()  # 点击确定
-        self.detailList.driver(text='确定').click()  # 二次提示--点击确定
-        self.detailList.driver(text='取消').click()  # 点击取消
+            print(e)
 
     def test_foot_002(self):
         """筛选明细"""

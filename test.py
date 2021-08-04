@@ -1,3 +1,5 @@
 import uiautomator2
+from base.base import Base
 
-uiautomator2.connect_wifi('192.168.1.162')
+b = Base()
+a = b.exists_ele(text='工班积载详情')

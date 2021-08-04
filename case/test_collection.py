@@ -27,11 +27,6 @@ class TestCollection(unittest.TestCase):
         cls.common = Common()
         print('导入pl文件..')
         cls.pl = PL()
-        unlock_phone(driver=cls.login.driver)  # 判断设备锁状态
-        print('重启app..')
-        cls.login.restart_app()
-        print('判断当前app是否在登录页面...')
-        cls.login.page_judge_login()  # 判断app是否在登陆页面
 
     def tearDown(self) -> None:
         self.common.restart_app()  # 重启app
@@ -42,7 +37,7 @@ class TestCollection(unittest.TestCase):
         try:
             self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
             self.pl.page_pl_click_create()
-            self.common.page_common_import_pl_file('清单1', '清单1.xlsx')
+            self.common.page_common_import_pl_file(plNumber='清单1', excelName='清单1.xlsx')
             self.pl.page_pl_click_pl_name('清单1')
             self.common.page_common_click_detail_name(detailName='鹏1')  # 进入明细详情
             self.detailList.page_send_address(address='uiAddressTest003')  # 输入场地
@@ -89,7 +84,7 @@ class TestCollection(unittest.TestCase):
             else:
                 return False
         except Exception:
-            raise
+            print(Exception)
 
     def test_collection_003(self):
         """下载为excel"""
@@ -103,18 +98,21 @@ class TestCollection(unittest.TestCase):
     def test_collection_004(self):
         """验证件毛体功能"""
         print('---test_collection_004---')
-        self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
-        self.pl.page_pl_click_create()  # 点击新增
-        self.pl.page_pl_send_pl_number('清单2')  # 输入提单号
-        self.pl.page_pl_send_data(11, 12, 13)  # 输入件数/体积/重量
-        self.pl.click_ele(text='确定')
-        time.sleep(1)
-        self.pl.driver.swipe_ext('down', 1)  # 上滑刷新
-        time.sleep(1)
-        self.pl.page_pl_click_pl_right_button(1)  # 点击清单2右上角按钮
-        self.pl.page_pl_click_edit()  # 点击编辑按钮
-        self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
-        print(self.common.driver.toast.get_message())  # 打印提示信息
+        try:
+            self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
+            self.pl.page_pl_click_create()  # 点击新增
+            self.pl.page_pl_send_pl_number('清单2')  # 输入提单号
+            self.pl.page_pl_send_data(11, 12, 13)  # 输入件数/体积/重量
+            self.pl.click_ele(text='确定')
+            time.sleep(1)
+            self.pl.driver.swipe_ext('down', 1)  # 上滑刷新
+            time.sleep(1)
+            self.pl.page_pl_click_pl_right_button(1)  # 点击清单2右上角按钮
+            self.pl.page_pl_click_edit()  # 点击编辑按钮
+            self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
+            print(self.common.driver.toast.get_message())  # 打印提示信息
+        except Exception as e:
+            print(e)
 
     def test_collection_005(self):
         """整体照片"""
@@ -126,16 +124,24 @@ class TestCollection(unittest.TestCase):
             self.common.page_common_click_camara()  # 点击拍照按钮
             self.common.page_common_take_photo()  # 拍一张
             self.common.page_common_take_video()  # 录像
+            time.sleep(2)
+            self.common.driver.press('back')
+            self.common.driver.press('back')
+            time.sleep(2)
         except Exception as e:
             print(e)
 
     def test_collection_006(self):
         """新增明细"""
-        print('---test_collection_005---')
-        self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
-        self.pl.page_pl_click_pl_name('清单2')  # 进入明细列表
-        self.common.page_common_detail_add_detail('新增明细001', '角钢、紧固件 Angle steel, fasteners', 1000, 1100, 1200, 1.32, 2,
-                                                  '铁箱 IRON CASE')
-        self.common.click_ele(text='确定')
-        self.common.page_common_import_picture(2)  # 从相册导入照片
-        self.common.click_ele(text='保存')
+        print('---test_collection_006---')
+        try:
+            self.common.page_common_go_pl_list('uiCollection')  # 进入PL列表
+            self.pl.page_pl_click_pl_name('清单2')  # 进入明细列表
+            self.common.page_common_detail_add_detail('新增明细001', '角钢、紧固件 Angle steel, fasteners', 1000, 1100, 1200,
+                                                      1.32, 2,
+                                                      '铁箱 IRON CASE')
+            self.common.click_ele(text='确定')
+            self.common.page_common_import_picture(2)  # 从相册导入照片
+            self.common.click_ele(text='保存')
+        except Exception as e:
+            print(e)

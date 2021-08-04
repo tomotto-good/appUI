@@ -147,7 +147,17 @@ class Common(Base):
         # 输入提单号-点击选择文件-点击excel-ok
         self.pl.page_pl_send_pl_number(plNumber)
         self.pl.page_pl_click_select_file()
-        self.click_ele(text=excelName)
-        self.click_ele(text='OK')
-        self.click_ele(text='确定')
-        print(self.driver.toast.get_message())
+        if self.driver.exists(text=excelName):
+            self.click_ele(text=excelName)
+            self.click_ele(text='OK')
+            self.click_ele(text='确定')
+            print(self.driver.toast.get_message())
+        else:
+            self.click_ele(description='显示根目录')
+            self.click_ele(text='下载')
+            self.click_ele(text='pl模板')
+            time.sleep(1)
+            self.click_ele(text=excelName)
+            self.click_ele(text='OK')
+            self.click_ele(text='确定')
+            print(self.driver.toast.get_message())

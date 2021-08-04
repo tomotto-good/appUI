@@ -34,4 +34,4 @@ class PageTaskList(Base):
         # 点击莫斯一下-搜索任务
         self.click_ele(task.marsID)
         self.send_key(text=text, ID=task.searchID)
-        self.click_ele(task.searchButtonID)
+        self.click_ele(ID=task.searchButtonID)

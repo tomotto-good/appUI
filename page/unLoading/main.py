@@ -23,8 +23,14 @@ class PageMain(Base):
     def page_click_add_abnormal(self):
         self.click_ele(unLoading.addAbnormalID)
 
+    # 添加照片备注
+    def page_send_photo_abnormal_remark(self, remark):
+        self.send_key(text=remark, ID=unLoading.addReamrkID)
+        self.click_ele(text='确定')
+
     # 输入照片备注
     def page_send_photo_remark(self, remark):
+        self.page_click_add_abnormal()
         self.send_key(text=remark, ID=unLoading.addReamrkID)
         self.click_ele(text='确定')
 

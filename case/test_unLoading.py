@@ -81,18 +81,18 @@ class TestUnLoading(unittest.TestCase):
         self.common.driver.swipe_ext('up', 0.1)
         self.main.page_click_add_abnormal()  # 点击添加异常按钮
         self.main.click_ele(text='生锈')
-        self.main.page_send_photo_remark('卸货过程-舱位整体照片')
+        self.main.page_send_photo_abnormal_remark('卸货过程-舱位整体照片')
         self.main.page_click_bl_front_select('清单1')
         self.common.page_common_import_picture(2)
         self.main.page_click_add_abnormal()  # 点击添加异常按钮
         self.main.click_ele(text='变形')
-        self.main.page_send_photo_remark('卸货过程-BL整体照片')
+        self.main.page_send_photo_abnormal_remark('卸货过程-BL整体照片')
         self.main.page_send_detail_select('鹏1')
         self.main.click_ele(text='鹏1')
         self.common.page_common_import_picture(2)
         self.main.page_click_add_abnormal()  # 点击添加异常按钮
         self.main.click_ele(text='划痕')
-        self.main.page_send_photo_remark('卸货过程-明细照片')
+        self.main.page_send_photo_abnormal_remark('卸货过程-明细照片')
 
     def test_unLoading_004(self):
         """录入工班数据"""
@@ -100,7 +100,7 @@ class TestUnLoading(unittest.TestCase):
         try:
             self.pageHome.page_click_task_button()
             self.pageTaskList.page_click_search('uiUnloading')  # 搜索任务
-            self.common.page_common_click_task_name('监卸')  # 点击任务名称进入任务
+            self.common.page_common_click_task_name(taskName='监卸')  # 点击任务名称进入任务
             self.main.page_click_create_shift()  # 新建工班
             self.shift.page_send_shift_name('工班1')  # 录入工班名称
             self.shift.click_ele(text='确定')

@@ -70,7 +70,7 @@ class TestCollection(unittest.TestCase):
             time.sleep(1)
 
         except Exception as e:
-            print(e)
+            raise e
 
     def test_collection_002(self):
         """筛选明细"""
@@ -78,22 +78,22 @@ class TestCollection(unittest.TestCase):
         try:
             self.common.page_common_go_detail_list('uiCollection', '清单1')
             self.common.page_common_detail_supplier_screen('河南鹤壁')  # 根据厂商筛选任务
-            if self.detailList.exists_ele(text='博'):
-                self.common.save_picture(self.path.imagePath + r'\collection\supplier.jpg')  # 截图
-                print('--测试通过--')
-            else:
-                return False
-        except Exception:
-            print(Exception)
+            self.assertTrue(self.detailList.exists_ele_text(text='博'))
+        except Exception as e:
+            raise e
 
     def test_collection_003(self):
         """下载为excel"""
         print('---test_collection_003---')
-        self.common.page_common_go_detail_list('uiCollection', '清单1')
-        self.common.page_common_detail_click_right_button()  # 点击右上角功能按钮
-        self.detailList.page_click_download_excel()  # 下载为excel
-        time.sleep(1)
-        self.common.save_picture(self.path.imagePath + r'\collection\excel.jpg')  # 截图
+        try:
+            self.common.page_common_go_detail_list('uiCollection', '清单1')
+            self.common.page_common_detail_click_right_button()  # 点击右上角功能按钮
+            self.detailList.page_click_download_excel()  # 下载为excel
+            time.sleep(3)
+            excelName = self.detailList.get_text(ID='com.mj.app.marsreport.pre:id/head_title')  # 获取excel名称
+            self.assertIn('xls', excelName)
+        except Exception as e:
+            raise e
 
     def test_collection_004(self):
         """验证件毛体功能"""
@@ -112,7 +112,7 @@ class TestCollection(unittest.TestCase):
             self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
             print(self.common.driver.toast.get_message())  # 打印提示信息
         except Exception as e:
-            print(e)
+            raise e
 
     def test_collection_005(self):
         """整体照片"""
@@ -129,7 +129,7 @@ class TestCollection(unittest.TestCase):
             self.common.driver.press('back')
             time.sleep(2)
         except Exception as e:
-            print(e)
+            raise e
 
     def test_collection_006(self):
         """新增明细"""
@@ -144,4 +144,4 @@ class TestCollection(unittest.TestCase):
             self.common.page_common_import_picture(2)  # 从相册导入照片
             self.common.click_ele(text='保存')
         except Exception as e:
-            print(e)
+            raise e

@@ -12,12 +12,23 @@
         h1,h2,h3,h4,h5,h6 {
 	font-weight: 100
 }
+
 h1 {
 	font-size: 30px
-}h2 {
-	font-size: 24px}h3 {
-	font-size: 16px}h4 {
-	font-size: 14px}
+}
+
+h2 {
+	font-size: 24px
+}
+
+h3 {
+	font-size: 16px
+}
+
+h4 {
+	font-size: 14px
+}
+
 h5 {
 	font-size: 12px
 }
@@ -7148,13 +7159,13 @@ body.skin-3 {
 
 
     var resultData = {
-    "testPass": 23,
+    "testPass": 22,
     "testResult": [
         {
             "className": "TestCollection",
             "methodName": "test_collection_001",
             "description": "集港明细",
-            "spendTime": "56.7 s",
+            "spendTime": "48.3 s",
             "status": "成功",
             "log": [
                 "---test_collection_001---",
@@ -7188,14 +7199,10 @@ body.skin-3 {
                 "点击 从相册导入",
                 "点击 com.mj.app.marsreport.pre:id/button_apply",
                 "点击 破损",
-                "点击 批量集港",
-                "点击 批量集港",
-                "点击 ID=com.mj.app.marsreport.pre:id/cgi_site Xpath=None 输入:uiAddressTest005",
-                "点击 com.mj.app.marsreport.pre:id/cgi_site",
-                "点击 ID=com.mj.app.marsreport.pre:id/cgi_plate_number Xpath=None 输入:鲁D：3640U",
-                "点击 com.mj.app.marsreport.pre:id/cgi_plate_number",
-                "点击 确定",
-                "点击 确定",
+                "'异常' != '已完成'",
+                "- 异常",
+                "+ 已完成",
+                "",
                 "点击 com.mj.app.marsreport.pre:id/close",
                 ""
             ]
@@ -7204,7 +7211,7 @@ body.skin-3 {
             "className": "TestCollection",
             "methodName": "test_collection_002",
             "description": "筛选明细",
-            "spendTime": "19.9 s",
+            "spendTime": "18.4 s",
             "status": "成功",
             "log": [
                 "---test_collection_002---",
@@ -7224,7 +7231,7 @@ body.skin-3 {
             "className": "TestCollection",
             "methodName": "test_collection_003",
             "description": "下载为excel",
-            "spendTime": "21.0 s",
+            "spendTime": "18.1 s",
             "status": "成功",
             "log": [
                 "---test_collection_003---",
@@ -7242,7 +7249,7 @@ body.skin-3 {
             "className": "TestCollection",
             "methodName": "test_collection_004",
             "description": "验证件毛体功能",
-            "spendTime": "35.4 s",
+            "spendTime": "30.4 s",
             "status": "成功",
             "log": [
                 "---test_collection_004---",
@@ -7279,7 +7286,7 @@ body.skin-3 {
             "className": "TestCollection",
             "methodName": "test_collection_005",
             "description": "整体照片",
-            "spendTime": "32.3 s",
+            "spendTime": "28.7 s",
             "status": "成功",
             "log": [
                 "---test_collection_005---",
@@ -7297,7 +7304,7 @@ body.skin-3 {
             "className": "TestCollection",
             "methodName": "test_collection_006",
             "description": "新增明细",
-            "spendTime": "34.0 s",
+            "spendTime": "27.2 s",
             "status": "成功",
             "log": [
                 "---test_collection_006---",
@@ -7333,7 +7340,7 @@ body.skin-3 {
             "className": "TestFoot",
             "methodName": "test_foot_001",
             "description": "正常/异常/批量打尺",
-            "spendTime": "64.2 s",
+            "spendTime": "45.8 s",
             "status": "成功",
             "log": [
                 "---test_foot_001---",
@@ -7370,10 +7377,10 @@ body.skin-3 {
                 "点击 com.mj.app.marsreport.pre:id/button_apply",
                 "点击 生锈",
                 "点击 确定",
-                "判断 龙3是否存在",
-                "判断 龙3是否存在",
-                "点击 批量打尺",
-                "点击 批量打尺",
+                "'已完成' != '异常'",
+                "- 已完成",
+                "+ 异常",
+                "",
                 "点击 com.mj.app.marsreport.pre:id/close",
                 ""
             ]
@@ -7382,22 +7389,26 @@ body.skin-3 {
             "className": "TestFoot",
             "methodName": "test_foot_002",
             "description": "筛选明细",
-            "spendTime": "20.9 s",
-            "status": "成功",
+            "spendTime": "41.6 s",
+            "status": "错误",
             "log": [
-                "---test_foot_002---",
-                "点击 com.mj.app.marsreport.pre:id/taskTitle",
-                "点击 uiFoot",
-                "点击 清单1",
-                "点击 com.mj.app.marsreport.pre:id/close",
-                ""
+                "---test_foot_002---\n点击 com.mj.app.marsreport.pre:id/taskTitle\n点击 uiFoot\n点击 清单1\n点击 com.mj.app.marsreport.pre:id/close\n",
+                "Traceback (most recent call last):\n",
+                "  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.1520.0_x64__qbz5n2kfra8p0\\lib\\unittest\\case.py\", line 59, in testPartExecutor\n    yield\n",
+                "  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.1520.0_x64__qbz5n2kfra8p0\\lib\\unittest\\case.py\", line 593, in run\n    self._callTestMethod(testMethod)\n",
+                "  File \"C:\\Program Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.9_3.9.1520.0_x64__qbz5n2kfra8p0\\lib\\unittest\\case.py\", line 550, in _callTestMethod\n    method()\n",
+                "  File \"E:\\test\\appUI\\case\\test_foot.py\", line 78, in test_foot_002\n    status = self.common.page_common_get_detail_status(0)\n",
+                "  File \"E:\\test\\appUI\\page\\common\\common.py\", line 47, in page_common_get_detail_status\n    return self.get_ele(ID=common.detailStatusID)[statusIndex].get_text()\n",
+                "  File \"C:\\Users\\MarsTech2816\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python39\\site-packages\\uiautomator2\\_selector.py\", line 360, in get_text\n    self.must_wait(timeout=timeout)\n",
+                "  File \"C:\\Users\\MarsTech2816\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.9_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python39\\site-packages\\uiautomator2\\_selector.py\", line 345, in must_wait\n    raise UiObjectNotFoundError({'code': -32002, 'data': str(self.selector), 'method': 'wait'})\n",
+                "uiautomator2.exceptions.UiObjectNotFoundError: -32002 Client error: <> data: Selector [resourceId='com.mj.app.marsreport.pre:id/item_label', instance=0], method: None\n"
             ]
         },
         {
             "className": "TestFoot",
             "methodName": "test_foot_003",
             "description": "生成日报",
-            "spendTime": "30.2 s",
+            "spendTime": "27.4 s",
             "status": "成功",
             "log": [
                 "---test_foot_003---",
@@ -7415,7 +7426,7 @@ body.skin-3 {
             "className": "TestFoot",
             "methodName": "test_foot_004",
             "description": "下载清单",
-            "spendTime": "22.3 s",
+            "spendTime": "22.1 s",
             "status": "成功",
             "log": [
                 "---test_foot_004---",
@@ -7433,7 +7444,7 @@ body.skin-3 {
             "className": "TestFoot",
             "methodName": "test_foot_006",
             "description": "重建测试数据",
-            "spendTime": "0.0 s",
+            "spendTime": "0.001 s",
             "status": "跳过",
             "log": [
                 "跳过，等PC脚本完成后可执行"
@@ -7443,7 +7454,7 @@ body.skin-3 {
             "className": "TestIM",
             "methodName": "test_im_001",
             "description": "验证图片格式的文件是否正常打开",
-            "spendTime": "17.6 s",
+            "spendTime": "16.2 s",
             "status": "成功",
             "log": [
                 "1.进入消息列表",
@@ -7471,7 +7482,7 @@ body.skin-3 {
             "className": "TestIM",
             "methodName": "test_im_002",
             "description": "验证点击推送到IM的系统通知可以正常跳转到H5",
-            "spendTime": "2.8 s",
+            "spendTime": "5.3 s",
             "status": "成功",
             "log": [
                 "点击 com.mj.app.marsreport.pre:id/close",
@@ -7482,7 +7493,7 @@ body.skin-3 {
             "className": "TestIM",
             "methodName": "test_im_003",
             "description": "",
-            "spendTime": "2.79 s",
+            "spendTime": "2.68 s",
             "status": "成功",
             "log": [
                 "点击 com.mj.app.marsreport.pre:id/close",
@@ -7493,7 +7504,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_001",
             "description": "导入PL",
-            "spendTime": "18.7 s",
+            "spendTime": "16.6 s",
             "status": "成功",
             "log": [
                 "---test_loading_001---",
@@ -7523,7 +7534,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_002",
             "description": "装前货况-其他照片",
-            "spendTime": "44.0 s",
+            "spendTime": "33.1 s",
             "status": "成功",
             "log": [
                 "---test_loading_002---",
@@ -7567,7 +7578,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_003",
             "description": "船舶概况-整体照片",
-            "spendTime": "30.4 s",
+            "spendTime": "22.2 s",
             "status": "成功",
             "log": [
                 "---test_loading_003---",
@@ -7603,7 +7614,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_004",
             "description": "装载过程-舱位整体照片",
-            "spendTime": "37.1 s",
+            "spendTime": "34.0 s",
             "status": "成功",
             "log": [
                 "---test_loading_004---",
@@ -7649,7 +7660,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_005",
             "description": "绑扎材料",
-            "spendTime": "14.4 s",
+            "spendTime": "15.7 s",
             "status": "成功",
             "log": [
                 "---test_loading_005---",
@@ -7673,7 +7684,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_006",
             "description": "录入工班数据",
-            "spendTime": "33.6 s",
+            "spendTime": "25.5 s",
             "status": "成功",
             "log": [
                 "---test_loading_006---",
@@ -7728,7 +7739,7 @@ body.skin-3 {
             "className": "TestLoading",
             "methodName": "test_loading_007",
             "description": "验证件毛体功能",
-            "spendTime": "0.000997 s",
+            "spendTime": "0.000258 s",
             "status": "跳过",
             "log": [
                 "没时间"
@@ -7768,7 +7779,7 @@ body.skin-3 {
             "className": "TestUnLoading",
             "methodName": "test_unLoading_002",
             "description": "船舶概况照片",
-            "spendTime": "31.1 s",
+            "spendTime": "24.3 s",
             "status": "成功",
             "log": [
                 "---test_unloading_002---",
@@ -7805,7 +7816,7 @@ body.skin-3 {
             "className": "TestUnLoading",
             "methodName": "test_unLoading_003",
             "description": "卸货过程照片",
-            "spendTime": "33.1 s",
+            "spendTime": "27.3 s",
             "status": "成功",
             "log": [
                 "---test_unloading_003---",
@@ -7851,7 +7862,7 @@ body.skin-3 {
             "className": "TestUnLoading",
             "methodName": "test_unLoading_004",
             "description": "录入工班数据",
-            "spendTime": "18.5 s",
+            "spendTime": "14.2 s",
             "status": "成功",
             "log": [
                 "---test_loading_006---",
@@ -7884,9 +7895,9 @@ body.skin-3 {
     ],
     "testName": "莫斯APP测试",
     "testAll": 25,
-    "testFail": 0,
-    "beginTime": "2021-08-04 18:17:28",
-    "totalTime": "730s",
+    "testFail": 1,
+    "beginTime": "2021-08-05 10:18:32",
+    "totalTime": "668s",
     "testSkip": 2,
     "testError": 0
 };

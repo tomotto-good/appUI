@@ -56,7 +56,7 @@ class TestFoot(unittest.TestCase):
             status = self.common.page_common_get_detail_status(1)
             self.assertEqual(status, '异常')
             while 1 == 1:
-                if self.detailList.exists_ele(text='龙3'):
+                if self.detailList.exists_ele_text(text='龙3'):
                     self.detailList.page_detail_click_batch_foot()  # 点击批量打尺
                     break
                 else:
@@ -66,17 +66,20 @@ class TestFoot(unittest.TestCase):
             self.detailList.driver(text='确定').click()  # 点击确定
             self.detailList.driver(text='确定').click()  # 二次提示--点击确定
             self.detailList.driver(text='取消').click()  # 点击取消
-        except AssertionError as e:
-            print(e)
+        except Exception as e:
+            raise e
 
     def test_foot_002(self):
         """筛选明细"""
         print('---test_foot_002---')
-        self.common.page_common_go_detail_list('uiFoot', '清单1')
-        self.detailList.driver(text='有无异常').click()  # 筛选明细异常
-        self.detailList.driver(text='有异常').click()
-        status = self.common.page_common_get_detail_status(0)
-        self.assertEqual(status, '异常')
+        try:
+            self.common.page_common_go_detail_list('uiFoot', '清单1')
+            self.detailList.driver(text='有无异常').click()  # 筛选明细异常
+            self.detailList.driver(text='有异常').click()
+            status = self.common.page_common_get_detail_status(0)
+            self.assertEqual(status, '异常')
+        except Exception as e:
+            raise e
 
     def test_foot_003(self):
         """生成日报"""
@@ -100,16 +103,25 @@ class TestFoot(unittest.TestCase):
             self.common.save_picture(self.path.imagePath + r'\foot\Report.jpg')
             self.assertIn('pdf', self.detailList.page_detail_get_report_name())
         except Exception as e:
-            print(e)
+            raise e
 
     def test_foot_004(self):
         """下载清单"""
         print('---test_foot_004---')
-        self.common.page_common_go_detail_list('uiFoot', '清单1')
-        self.common.page_common_detail_click_right_button()  # 点击右上角功能按钮
-        self.detailList.page_click_download_excel()  # 下载为excel
-        time.sleep(1)
-        self.common.save_picture(self.path.imagePath + r'\foot\excel.jpg')  # 截图
+        try:
+            self.common.page_common_go_detail_list('uiFoot', '清单1')
+            self.common.page_common_detail_click_right_button()  # 点击右上角功能按钮
+            self.detailList.page_click_download_excel()  # 下载为excel
+            time.sleep(1)
+            excelName = self.detailList.get_text(ID='com.mj.app.marsreport.pre:id/head_title')  # 获取excel名称
+            self.assertIn('xls', excelName)
+        except Exception as e:
+            raise e
+
+    def test_foot_005(self):
+        """整体照片"""
+        print('---test_foot_005---')
+        pass
 
     @unittest.skip('跳过，等PC脚本完成后可执行')
     def test_foot_006(self):
@@ -124,4 +136,4 @@ class TestFoot(unittest.TestCase):
             self.common.page_common_import_pl_file('清单1', '清单1.xlsx')  # 导入文件
             print(self.common.driver.toast.get_message())  # 打印提示信息
         except Exception as e:
-            print(e)
+            raise e

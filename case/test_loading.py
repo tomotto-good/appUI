@@ -86,7 +86,7 @@ class TestLoading(unittest.TestCase):
             self.main.page_send_photo_remark('装前货况明细照片')
 
         except Exception as e:
-            print(e)
+            raise e
 
     def test_loading_003(self):
         """船舶概况-整体照片"""
@@ -107,7 +107,7 @@ class TestLoading(unittest.TestCase):
             self.main.page_click_add_abnormal()  # 点击添加异常按钮
             self.main.page_send_photo_remark('船舶概况舱位照片')
         except Exception as e:
-            print(e)
+            raise e
 
     def test_loading_004(self):
         """装载过程-舱位整体照片"""
@@ -126,7 +126,7 @@ class TestLoading(unittest.TestCase):
             time.sleep(1)
             self.common.driver.swipe_ext('down', 1)
         except Exception as e:
-            print(e)
+            raise e
         """装载过程-BL整体照片"""
         try:
             print('---test_loading_008---')
@@ -140,7 +140,7 @@ class TestLoading(unittest.TestCase):
             time.sleep(1)
             self.common.driver.swipe_ext('down', 1)
         except Exception as e:
-            print(e)
+            raise e
         """装载过程-明细照片"""
         try:
             self.main.page_click_detail_front_select('龙1')  # 选择件号
@@ -151,7 +151,7 @@ class TestLoading(unittest.TestCase):
             self.main.click_ele(text='油污')
             self.main.page_send_photo_remark('装载过程明细照片')
         except Exception as e:
-            print(e)
+            raise e
 
     def test_loading_005(self):
         """绑扎材料"""
@@ -168,7 +168,7 @@ class TestLoading(unittest.TestCase):
             self.common.page_common_import_picture(2)  # 从相册导入照片
             time.sleep(1)
         except Exception as e:
-            print(e)
+            raise e
 
     def test_loading_006(self):
         """录入工班数据"""
@@ -180,10 +180,10 @@ class TestLoading(unittest.TestCase):
             self.main.page_click_create_shift()  # 新建工班
             self.shift.page_send_shift_name('工班1')  # 录入工班名称
             self.shift.click_ele(text='确定')
-            if self.shift.exists_ele('工班积载详情'):
+            if self.shift.exists_ele_text('工班积载详情'):
                 print('进入工班积载详情页')
                 self.shift.click_ele(text='清单1')
-                if self.shift.exists_ele(text='新增PL积载数据'):
+                if self.shift.exists_ele_text(text='新增PL积载数据'):
                     self.shift.click_ele(text='新增PL积载数据')
                     self.shift.page_send_shift_qty_volume_weight(10, 11, 12)
                     self.shift.click_ele(text='添加，并继续下一条')
@@ -192,7 +192,7 @@ class TestLoading(unittest.TestCase):
                     self.shift.click_ele(text='添加')
                     time.sleep(1)
                     self.shift.driver.press('back')
-                    if self.shift.exists_ele(text='工班积载详情'):
+                    if self.shift.exists_ele_text(text='工班积载详情'):
                         print("工班1-清单1件数/体积/重量： ", self.shift.page_get_shift_data())
                         self.shift.driver.press('back')
                         time.sleep(2)
@@ -204,7 +204,7 @@ class TestLoading(unittest.TestCase):
             else:
                 print('当前页面不在工班积载详情页')
         except Exception as e:
-            print(e)
+            raise e
 
     @unittest.skip('没时间')
     def test_loading_007(self):
@@ -224,4 +224,4 @@ class TestLoading(unittest.TestCase):
             self.common.page_common_import_pl_file('清单2', '清单1.xlsx')  # 导入文件
             print(self.common.driver.toast.get_message())  # 打印提示信息
         except Exception as e:
-            print(e)
+            raise e

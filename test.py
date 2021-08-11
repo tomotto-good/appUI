@@ -1,5 +1,5 @@
 import uiautomator2
 from base.base import Base
 
-b = Base()
-a = b.exists_ele(text='工班积载详情')
+driver = uiautomator2.connect_adb_wifi('192.168.1.162')
+print(driver.info)

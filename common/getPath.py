@@ -16,11 +16,3 @@ class GetPath:
         self.imagePath = os.path.join(self.appUIPath, 'image')
         # 获取page的目录路径
         self.pagePath = os.path.join(self.appUIPath, 'page')
-
-    # 打尺用例路径
-    def get_case_foot_path(self):
-        return os.path.join(self.casePath, 'foot')
-
-    # 集港用例路径
-    def get_case_collection_path(self):
-        return os.path.join(self.casePath, 'collection')

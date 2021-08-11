@@ -49,7 +49,7 @@ class TestUnLoading(unittest.TestCase):
             self.main.page_click_to_create()  # 点击马上去新建
             self.common.page_common_import_pl_file('清单1', '清单1.xlsx')  # 导入清单
         except Exception as e:
-            print(e)
+            raise e
 
     def test_unLoading_002(self):
         """船舶概况照片"""
@@ -67,32 +67,35 @@ class TestUnLoading(unittest.TestCase):
             self.main.page_send_photo_remark('船舶概况-舱位照片')
 
         except Exception as e:
-            print(e)
+            raise e
 
     def test_unLoading_003(self):
         """卸货过程照片"""
         print('---test_unloading_003---')
-        self.pageHome.page_click_task_button()
-        self.pageTaskList.page_click_search('uiUnloading')  # 搜索任务
-        self.common.page_common_click_task_name('监卸')  # 点击任务名称进入任务
-        self.common.click_ele(text='卸货过程')
-        self.common.page_common_import_picture(2)
-        time.sleep(1)
-        self.common.driver.swipe_ext('up', 0.1)
-        self.main.page_click_add_abnormal()  # 点击添加异常按钮
-        self.main.click_ele(text='生锈')
-        self.main.page_send_photo_abnormal_remark('卸货过程-舱位整体照片')
-        self.main.page_click_bl_front_select('清单1')
-        self.common.page_common_import_picture(2)
-        self.main.page_click_add_abnormal()  # 点击添加异常按钮
-        self.main.click_ele(text='变形')
-        self.main.page_send_photo_abnormal_remark('卸货过程-BL整体照片')
-        self.main.page_send_detail_select('鹏1')
-        self.main.click_ele(text='鹏1')
-        self.common.page_common_import_picture(2)
-        self.main.page_click_add_abnormal()  # 点击添加异常按钮
-        self.main.click_ele(text='划痕')
-        self.main.page_send_photo_abnormal_remark('卸货过程-明细照片')
+        try:
+            self.pageHome.page_click_task_button()
+            self.pageTaskList.page_click_search('uiUnloading')  # 搜索任务
+            self.common.page_common_click_task_name('监卸')  # 点击任务名称进入任务
+            self.common.click_ele(text='卸货过程')
+            self.common.page_common_import_picture(2)
+            time.sleep(1)
+            self.common.driver.swipe_ext('up', 0.1)
+            self.main.page_click_add_abnormal()  # 点击添加异常按钮
+            self.main.click_ele(text='生锈')
+            self.main.page_send_photo_abnormal_remark('卸货过程-舱位整体照片')
+            self.main.page_click_bl_front_select('清单1')
+            self.common.page_common_import_picture(2)
+            self.main.page_click_add_abnormal()  # 点击添加异常按钮
+            self.main.click_ele(text='变形')
+            self.main.page_send_photo_abnormal_remark('卸货过程-BL整体照片')
+            self.main.page_send_detail_select('鹏1')
+            self.main.click_ele(text='鹏1')
+            self.common.page_common_import_picture(2)
+            self.main.page_click_add_abnormal()  # 点击添加异常按钮
+            self.main.click_ele(text='划痕')
+            self.main.page_send_photo_abnormal_remark('卸货过程-明细照片')
+        except Exception as e:
+            raise e
 
     def test_unLoading_004(self):
         """录入工班数据"""
@@ -104,7 +107,7 @@ class TestUnLoading(unittest.TestCase):
             self.main.page_click_create_shift()  # 新建工班
             self.shift.page_send_shift_name('工班1')  # 录入工班名称
             self.shift.click_ele(text='确定')
-            if self.shift.exists_ele(text='工班卸载详情'):
+            if self.shift.exists_ele_text(text='工班卸载详情'):
                 print('进入工班卸载详情页')
                 self.shift.click_ele(text='No.2')
                 self.shift.click_ele(text='舱盖　 No.2')
@@ -114,4 +117,4 @@ class TestUnLoading(unittest.TestCase):
             else:
                 print('当前页面不在工班卸载详情页')
         except Exception as e:
-            print(e)
+            raise e

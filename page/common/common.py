@@ -116,7 +116,7 @@ class Common(Base):
     def page_common_click_task_name(self, taskName):
         # 点击任务名称进入任务
         while 1 == 1:
-            if self.exists_ele(text=taskName):
+            if self.exists_ele_text(text=taskName):
                 self.click_ele(text=taskName)
                 break
             else:

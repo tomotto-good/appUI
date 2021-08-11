@@ -4,7 +4,8 @@ import uiautomator2
 class Base:
 
     def __init__(self):
-        self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
+        # self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
+        self.driver = uiautomator2.connect_adb_wifi('192.168.1.162')
         self.packageName = 'com.mj.app.marsreport.pre'
 
     # 获取元素属性ID
@@ -50,9 +51,14 @@ class Base:
         self.get_ele(ID).send_keys(text=text)
 
     # 判断元素是否存在 返回bool
-    def exists_ele(self, text):
+    def exists_ele_text(self, text):
         print("判断 {}是否存在".format(text))
-        return self.driver(text=text).exists(timeout=5)
+        return self.driver(text=text).exists(timeout=3)
+
+    # 判断元素是否存在 返回bool
+    def exists_ele_resourceId(self, ID):
+        print("判断 {}是否存在".format(ID))
+        return self.driver(resourceId=ID).exists(timeout=5)
 
     # 返回元素文本
     def get_text(self, ID=None, xpath=None):

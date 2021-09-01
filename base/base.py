@@ -1,3 +1,5 @@
+import time
+
 import uiautomator2
 
 
@@ -5,27 +7,43 @@ class Base:
 
     def __init__(self):
         # self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
-        self.driver = uiautomator2.connect_adb_wifi('192.168.1.162')
-        self.packageName = 'com.mj.app.marsreport.pre'
+        self.driver = uiautomator2.connect_adb_wifi('192.168.1.227')  # viVo：192.168.1.164 华为：192.168.1.227
+        self.driver.implicitly_wait(5)
+
+    # 获取元素属性
+    def get_ele(self, ID=None, xpath=None, text=None, description=None, index=0):
+        while True:
+            if ID:
+                return self.driver(resourceId=ID)[index]
+            elif xpath:
+                return self.driver.xpath(xpath=xpath)
+            elif description:
+                return self.driver(description=description)
+            elif ID and text:
+                return self.driver(ID=ID, text=text)
+            elif self.exists_ele_text(text=text):
+                return self.driver(text=text)
+            else:
+                self.driver.swipe_ext('up', 0.5)
 
     # 获取元素属性ID
-    def get_ele(self, ID=None, xpath=None, text=None, description=None, index=0):
-        if ID:
-            return self.driver(resourceId=ID)[index]
-        elif xpath:
-            return self.driver.xpath(xpath=xpath)
-        elif text:
-            return self.driver(text=text)
-        elif description:
-            return self.driver(description=description)
-        elif ID and text:
-            return self.driver(ID=ID, text=text)
+    def get_ele_id(self, ID, index=0):
+        try:
+            i = 0
+            while i < 5:
+                i += 1
+                if self.exists_ele_resourceId(ID=ID):
+                    return self.driver(resourceId=ID)[index]
+                else:
+                    self.driver.swipe_ext('up', 0.5)
+        except Exception as e:
+            print(e)
 
     # 根据属性ID点击
     def click_ele(self, ID=None, xpath=None, text=None, description=None, index=0):
         if ID:
             print("点击 {}".format(ID))
-            self.get_ele(ID=ID, index=index).click()
+            self.get_ele_id(ID=ID, index=index).click()
         elif xpath:
             print("点击 {}".format(xpath))
             self.get_ele(xpath=xpath).click()
@@ -61,15 +79,17 @@ class Base:
         return self.driver(resourceId=ID).exists(timeout=5)
 
     # 返回元素文本
-    def get_text(self, ID=None, xpath=None):
+    def get_text(self, ID=None, xpath=None, index=0):
         print("返回ID={} xpath={}的文本信息".format(ID, xpath))
-        return self.get_ele(ID=ID, xpath=xpath).get_text()
+        return self.get_ele(ID=ID, xpath=xpath, index=index).get_text()
 
     # 重启app
-    def restart_app(self):
-        self.driver.app_start(self.packageName, stop=True)
-        self.click_ele(ID='com.mj.app.marsreport.pre:id/close')
+    def restart_app(self, packageName):
+        time.sleep(1)
+        self.driver.app_start(package_name=packageName, stop=True)
+        time.sleep(2)
 
-    # 截图
-    def get_image(self, filename):
-        self.driver.screenshot(filename=filename)
+    # 长按某个点
+    def long_click(self, x, y):
+        time.sleep(1)
+        self.driver.long_click(x, y, duration=1)

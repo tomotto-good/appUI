@@ -35,3 +35,11 @@ class PageTaskList(Base):
         self.click_ele(task.marsID)
         self.send_key(text=text, ID=task.searchID)
         self.click_ele(ID=task.searchButtonID)
+
+    def page_click_add_task_button(self):
+        # 点击任务列表添加任务按钮
+        self.click_ele(ID=task.addTaskButtonID)
+
+    def page_send_task_name(self, taskName):
+        # 输入任务名称
+        self.send_key(text=taskName, ID=task.taskNameInputID)

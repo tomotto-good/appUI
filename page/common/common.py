@@ -161,3 +161,11 @@ class Common(Base):
             self.click_ele(text='OK')
             self.click_ele(text='确定')
             print(self.driver.toast.get_message())
+
+    """任务相关"""
+
+    # 重启app并进入任务
+    def page_common_restart_app_go_task(self, packageName, taskName):
+        self.restart_app(packageName)
+        self.pageHome.page_click_task_button()
+        self.click_ele(text=taskName)

@@ -100,7 +100,6 @@ class TestFoot(unittest.TestCase):
             self.detailList.driver(text='生成日报').click()  # 生成日报
             self.detailList.driver(text='确定').click()
             time.sleep(3)
-            self.common.save_picture(self.path.imagePath + r'\foot\Report.jpg')
             self.assertIn('pdf', self.detailList.page_detail_get_report_name())
         except Exception as e:
             raise e

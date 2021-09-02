@@ -138,26 +138,11 @@ class TestTms(unittest.TestCase):
         """车次状态-已发车"""
         self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
         self.common.click_ele_text(text='鲁D 003')
-        self.common.click_ele_text(text='阿sir')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='装载过程')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='水湿')
-        self.common.click_ele_text(text='保存')
+        self.detailList.page_handle_detail_to_train('阿sir', '生锈')
         self.assertEqual(self.common.page_common_get_detail_status(0), '已装车')
-        self.common.click_ele_text(text='兵')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='装载过程')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='水湿')
-        self.common.click_ele_text(text='保存')
+        self.detailList.page_handle_detail_to_train('兵', '水湿')
         self.assertEqual(self.common.page_common_get_detail_status(1), '已装车')
-        self.common.click_ele_text(text='GP-1')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='装载过程')
-        self.common.page_common_import_picture(9)
-        self.common.click_ele_text(text='水湿')
-        self.common.click_ele_text(text='保存')
+        self.detailList.page_handle_detail_to_train('GP-1', '水湿')
         self.assertEqual(self.common.page_common_get_detail_status(2), '已装车')
         self.test_tms_006_01()  # 整体照片
         time.sleep(1)
@@ -167,6 +152,13 @@ class TestTms(unittest.TestCase):
         self.detailList.page_send_freight(111, 1)  # 输入运费并选择付款方式
         self.detailList.click_ele_text(text='确定')
         self.detailList.click_ele_text(text='确定并生成随车清单')
-        time.sleep(1)
-        self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
-        self.detailList.page_sign_save()
+        while True:
+            if self.detailList.exists_ele_text('清除'):  # 判断当前页面是否为签名页面
+                self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                self.detailList.page_sign_save()
+                break
+            else:
+                self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+                self.detailList.click_ele_text('鲁D 003')
+                self.detailList.click_ele_text('发车')
+                self.detailList.click_ele_text(text='确定并生成随车清单')

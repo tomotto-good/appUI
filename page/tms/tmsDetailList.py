@@ -1,4 +1,5 @@
 from base.base import Base
+from page.common.common import Common
 
 detailSelectID = 'com.mj.app.marsreport.test:id/isSelect'  # 明细选择框
 detailStatusID = 'com.mj.app.marsreport.test:id/item_label'  # 明细状态
@@ -10,6 +11,10 @@ saveID = 'com.mj.app.marsreport.test:id/save'  # 签名页面保存按钮
 
 
 class TmsDetailList(Base):
+    def __init__(self):
+        super().__init__()
+        self.common = Common()
+
     # 明细选择框
     def page_select_detail(self, number):
         for index in range(number):
@@ -18,6 +23,15 @@ class TmsDetailList(Base):
     # 返回第Index条明细状态，默认第一条
     def page_get_detail_status(self, index=0):
         return self.get_text_ID(detailStatusID, index=index)
+
+    # 进入明细详情，导入图片，选择异常,明细状态变为已装车
+    def page_handle_detail_to_train(self, shippingMark, abnormalName):
+        self.click_ele_text(text=shippingMark)
+        self.common.page_common_import_picture(9)
+        self.click_ele_text(text='装载过程')
+        self.common.page_common_import_picture(9)
+        self.click_ele_text(text=abnormalName)
+        self.click_ele_text(text='保存')
 
     # 输入运费并点击付款方式
     def page_send_freight(self, freight, payType):

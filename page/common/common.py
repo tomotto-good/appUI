@@ -20,9 +20,10 @@ class Common(Base):
         self.driver.screenshot(filename=filename)
         print('截图成功保存至：', filename)
 
-    # 监控IM推送消息并点击进入后返回
+    # 监控IM推送消息并停止操作5秒中
     def page_common_watch_IM(self):
-        self.driver.watcher().when('')
+        if self.driver.watch_context().when('//*[@resource-id="android:id/app_name_text"]'):
+            time.sleep(5)
 
     """相册页面"""
 

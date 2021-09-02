@@ -15,10 +15,12 @@ class Base:
             i = 0
             while i < 5:
                 i += 1
-                if self.driver(resourceId=ID).exists:
+                if self.exists_ele_ID(ID=ID):
+                    print('点击{}'.format(ID))
                     self.driver(resourceId=ID)[index].click()
                     break
                 else:
+                    print('下滑查找')
                     self.driver.swipe_ext('up', 0.5)
         except Exception as e:
             print(e)
@@ -30,9 +32,11 @@ class Base:
             while i < 5:
                 i += 1
                 if self.exists_ele_xpath(xpath=xpath):
+                    print('点击{}'.format(xpath))
                     self.driver(xpath=xpath)[index].click()
                     break
                 else:
+                    print('下滑查找')
                     self.driver.swipe_ext('up', 0.5)
         except Exception as e:
             print(e)
@@ -44,14 +48,16 @@ class Base:
             while i < 5:
                 i += 1
                 if self.exists_ele_text(text=text):
+                    print('点击{}'.format(text))
                     self.driver(text=text)[index].click()
                     break
                 else:
+                    print('下滑查找')
                     self.driver.swipe_ext('up', 0.5)
         except Exception as e:
             print(e)
 
-    # 循环查找text元素5次，没有找到向下滑动，找到后点击
+    # 循环查找description元素5次，没有找到向下滑动，找到后点击
     def click_ele_description(self, description, index=0):
         try:
             i = 0
@@ -61,6 +67,7 @@ class Base:
                     self.driver(description=description)[index].click()
                     break
                 else:
+                    print('下滑查找')
                     self.driver.swipe_ext('up', 0.5)
         except Exception as e:
             print(e)
@@ -74,6 +81,7 @@ class Base:
     def send_key_ID(self, text, ID, index=0):
         self.click_ele_ID(ID, index)
         self.driver.clear_text()
+        print('输入{}'.format(text))
         self.driver(resourceId=ID).send_keys(text=text)
 
     # 判断text元素是否存在 返回bool
@@ -104,10 +112,16 @@ class Base:
     # 重启app
     def restart_app(self, packageName):
         time.sleep(1)
+        print('重启app')
         self.driver.app_start(package_name=packageName, stop=True)
         time.sleep(2)
+
+    # 获取toast信息
+    def get_toast(self):
+        return self.driver.toast.get_message()
 
     # 长按某个点
     def long_click(self, x, y):
         time.sleep(1)
         self.driver.long_click(x, y, duration=1)
+    #

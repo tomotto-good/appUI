@@ -1,3 +1,2 @@
-import random
+import mobly
 
-print(random.randint(1, 10))

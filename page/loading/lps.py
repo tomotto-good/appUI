@@ -7,8 +7,8 @@ class PageLps(Base):
 
     def page_get_real_total(self):
         # 获取全船实际积载数据
-        return self.get_text(loading.lpsRealTotalID)
+        return self.get_text_ID(loading.lpsRealTotalID)
 
     def page_get_pre_total(self):
         # 获取全船预装货量
-        return self.get_text(loading.lpsPreTotalID)
+        return self.get_text_ID(loading.lpsPreTotalID)

@@ -30,7 +30,7 @@ class TestIM(unittest.TestCase):
             self.home.click_ele(text='1626849874506.jpg', ID='com.mj.app.marsreport.pre:id/file_name_right')
             print('---断言')
             time.sleep(2)
-            self.assertTrue(self.home.exists_ele_resourceId(ID='com.mj.app.marsreport.pre:id/imageView'))
+            self.assertTrue(self.home.exists_ele_ID(ID='com.mj.app.marsreport.pre:id/imageView'))
         except Exception as e:
             raise e
 
@@ -52,6 +52,6 @@ class TestIM(unittest.TestCase):
                 else:
                     self.home.driver.swipe_ext('down', 0.5)
             print("---断言")
-            self.assertTrue(self.home.exists_ele_resourceId(ID='com.mj.app.marsreport.pre:id/webView'))
+            self.assertTrue(self.home.exists_ele_ID(ID='com.mj.app.marsreport.pre:id/webView'))
         except Exception as e:
             raise e

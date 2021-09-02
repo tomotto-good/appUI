@@ -112,7 +112,7 @@ class TestFoot(unittest.TestCase):
             self.common.page_common_detail_click_right_button()  # 点击右上角功能按钮
             self.detailList.page_click_download_excel()  # 下载为excel
             time.sleep(1)
-            excelName = self.detailList.get_text(ID='com.mj.app.marsreport.pre:id/head_title')  # 获取excel名称
+            excelName = self.detailList.get_text_ID(ID='com.mj.app.marsreport.pre:id/head_title')  # 获取excel名称
             self.assertIn('xls', excelName)
         except Exception as e:
             raise e

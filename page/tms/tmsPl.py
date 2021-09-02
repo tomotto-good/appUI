@@ -23,41 +23,41 @@ class PageTmsPl(Base):
 
     def page_send_pl_name(self, plName):
         # 输入提单号
-        self.send_key(text=plName, ID=plNameID)
+        self.send_key_ID(text=plName, ID=plNameID)
 
     def page_send_acceptance(self, acceptance):
         # 输入受理号
-        self.send_key(text=acceptance, ID=acceptanceID)
+        self.send_key_ID(text=acceptance, ID=acceptanceID)
 
     def page_send_pl_size(self, quantity, volume, weight):
         # 输入清单尺寸
-        self.send_key(text=quantity, ID=quantityID)
-        self.send_key(text=volume, ID=volumeID)
-        self.send_key(text=weight, ID=weightID)
+        self.send_key_ID(text=quantity, ID=quantityID)
+        self.send_key_ID(text=volume, ID=volumeID)
+        self.send_key_ID(text=weight, ID=weightID)
 
     # 输入PL相关信息
     def page_send_more_info(self, contract, freightForwarder, shipper, contact, contact_phone, pod, description,
                             consignee):
-        self.send_key(text=contract, ID=contractID)
-        self.send_key(text=freightForwarder, ID=freightForwarderID)
-        self.send_key(text=shipper, ID=shipperID)
-        self.send_key(text=contact, ID=contactID)
-        self.send_key(text=contact_phone, ID=contactPhoneID)
+        self.send_key_ID(text=contract, ID=contractID)
+        self.send_key_ID(text=freightForwarder, ID=freightForwarderID)
+        self.send_key_ID(text=shipper, ID=shipperID)
+        self.send_key_ID(text=contact, ID=contactID)
+        self.send_key_ID(text=contact_phone, ID=contactPhoneID)
         time.sleep(1)
-        self.send_key(text=pod, ID=podID)
-        self.send_key(text=description, ID=descriptionId)
-        self.send_key(text=consignee, ID=consigneeID)
+        self.send_key_ID(text=pod, ID=podID)
+        self.send_key_ID(text=description, ID=descriptionId)
+        self.send_key_ID(text=consignee, ID=consigneeID)
 
     # 导入PL清单文件
     def page_click_import_file(self):
-        self.click_ele(ID=selectFileID)
+        self.click_ele_ID(ID=selectFileID)
         if self.exists_ele_text(text='清单1.xlsx'):
-            self.click_ele(text='清单1.xlsx')
-            self.click_ele(text='OK')
+            self.click_ele_text(text='清单1.xlsx')
+            self.click_ele_text(text='OK')
         else:
-            self.click_ele(description='显示根目录')
-            self.click_ele(text='文件管理(QQ浏览器)')
-            self.click_ele(text='手机存储')
-            self.click_ele(text='1')
-            self.click_ele(text='清单1.xlsx')
-            self.click_ele(text='OK')
+            self.click_ele_description(description='显示根目录')
+            self.click_ele_text(text='文件管理(QQ浏览器)')
+            self.click_ele_text(text='手机存储')
+            self.click_ele_text(text='1')
+            self.click_ele_text(text='清单1.xlsx')
+            self.click_ele_text(text='OK')

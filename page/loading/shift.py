@@ -22,7 +22,7 @@ class PageShift(Base):
 
     # 获取工班装货量
     def page_get_shift_data(self):
-        qty = self.get_text(loading.shiftQty)
-        volume = self.get_text(loading.shiftVolume)
-        weight = self.get_text(loading.shiftWeight)
+        qty = self.get_text_ID(loading.shiftQty)
+        volume = self.get_text_ID(loading.shiftVolume)
+        weight = self.get_text_ID(loading.shiftWeight)
         return qty, volume, weight

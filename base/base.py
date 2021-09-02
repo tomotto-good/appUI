@@ -6,82 +6,100 @@ import uiautomator2
 class Base:
 
     def __init__(self):
-        # self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
-        self.driver = uiautomator2.connect_adb_wifi('192.168.1.227')  # viVo：192.168.1.164 华为：192.168.1.227
-        self.driver.implicitly_wait(5)
+        self.driver = uiautomator2.connect('SQRNW17927003213')  # b182d0da,SQRNW17927003213,926QADV7222QM
+        # self.driver = uiautomator2.connect_adb_wifi('192.168.1.227')  # viVo：192.168.1.164 华为：192.168.1.227
 
-    # 获取元素属性
-    def get_ele(self, ID=None, xpath=None, text=None, description=None, index=0):
-        while True:
-            if ID:
-                return self.driver(resourceId=ID)[index]
-            elif xpath:
-                return self.driver.xpath(xpath=xpath)
-            elif description:
-                return self.driver(description=description)
-            elif ID and text:
-                return self.driver(ID=ID, text=text)
-            elif self.exists_ele_text(text=text):
-                return self.driver(text=text)
-            else:
-                self.driver.swipe_ext('up', 0.5)
-
-    # 获取元素属性ID
-    def get_ele_id(self, ID, index=0):
+    # 循环查找ID元素5次，没有找到向下滑动，找到后点击
+    def click_ele_ID(self, ID, index=0):
         try:
             i = 0
             while i < 5:
                 i += 1
-                if self.exists_ele_resourceId(ID=ID):
-                    return self.driver(resourceId=ID)[index]
+                if self.driver(resourceId=ID).exists:
+                    self.driver(resourceId=ID)[index].click()
+                    break
                 else:
                     self.driver.swipe_ext('up', 0.5)
         except Exception as e:
             print(e)
 
-    # 根据属性ID点击
-    def click_ele(self, ID=None, xpath=None, text=None, description=None, index=0):
-        if ID:
-            print("点击 {}".format(ID))
-            self.get_ele_id(ID=ID, index=index).click()
-        elif xpath:
-            print("点击 {}".format(xpath))
-            self.get_ele(xpath=xpath).click()
-        elif text:
-            print("点击 {}".format(text))
-            self.get_ele(text=text, index=index).click()
-        elif description:
-            print("点击 {}".format(description))
-            self.get_ele(description=description).click()
-        elif ID and text:
-            self.get_ele(ID=ID, text=text, index=index).click()
+    # 循环查找xpath元素5次，没有找到向下滑动，找到后点击
+    def click_ele_xpath(self, xpath, index=0):
+        try:
+            i = 0
+            while i < 5:
+                i += 1
+                if self.exists_ele_xpath(xpath=xpath):
+                    self.driver(xpath=xpath)[index].click()
+                    break
+                else:
+                    self.driver.swipe_ext('up', 0.5)
+        except Exception as e:
+            print(e)
+
+    # 循环查找text元素5次，没有找到向下滑动，找到后点击
+    def click_ele_text(self, text, index=0):
+        try:
+            i = 0
+            while i < 5:
+                i += 1
+                if self.exists_ele_text(text=text):
+                    self.driver(text=text)[index].click()
+                    break
+                else:
+                    self.driver.swipe_ext('up', 0.5)
+        except Exception as e:
+            print(e)
+
+    # 循环查找text元素5次，没有找到向下滑动，找到后点击
+    def click_ele_description(self, description, index=0):
+        try:
+            i = 0
+            while i < 5:
+                i += 1
+                if self.exists_ele_description(description):
+                    self.driver(description=description)[index].click()
+                    break
+                else:
+                    self.driver.swipe_ext('up', 0.5)
+        except Exception as e:
+            print(e)
 
     # 根据坐标点击
     def click_xy(self, x, y):
         print("点击坐标 {} {}".format(x, y))
         self.driver.click(x, y)
 
-    # 输入方法
-    def send_key(self, text, ID=None, xpath=None):
-        print("点击 ID={} Xpath={} 输入:{}".format(ID, xpath, text))
-        self.click_ele(ID=ID, xpath=xpath)
+    # 根据ID输入方法
+    def send_key_ID(self, text, ID, index=0):
+        self.click_ele_ID(ID, index)
         self.driver.clear_text()
-        self.get_ele(ID).send_keys(text=text)
+        self.driver(resourceId=ID).send_keys(text=text)
 
-    # 判断元素是否存在 返回bool
+    # 判断text元素是否存在 返回bool
     def exists_ele_text(self, text):
         print("判断 {}是否存在".format(text))
-        return self.driver(text=text).exists(timeout=3)
+        return self.driver(text=text).exists(timeout=5)
 
-    # 判断元素是否存在 返回bool
-    def exists_ele_resourceId(self, ID):
+    # 判断ID元素是否存在 返回bool
+    def exists_ele_ID(self, ID):
         print("判断 {}是否存在".format(ID))
         return self.driver(resourceId=ID).exists(timeout=5)
 
+    # 判断description元素是否存在 返回bool
+    def exists_ele_description(self, description):
+        print("判断 {}是否存在".format(description))
+        return self.driver(description=description).exists(timeout=5)
+
+    # 判断xpath元素是否存在 返回bool
+    def exists_ele_xpath(self, xpath):
+        print("判断 {}是否存在".format(xpath))
+        return self.driver(xpath=xpath).exists(timeout=5)
+
     # 返回元素文本
-    def get_text(self, ID=None, xpath=None, index=0):
-        print("返回ID={} xpath={}的文本信息".format(ID, xpath))
-        return self.get_ele(ID=ID, xpath=xpath, index=index).get_text()
+    def get_text_ID(self, ID=None, index=0):
+        print("返回ID={}的文本信息".format(ID))
+        return self.driver(resourceId=ID)[index].get_text()
 
     # 重启app
     def restart_app(self, packageName):

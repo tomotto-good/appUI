@@ -20,22 +20,26 @@ class Common(Base):
         self.driver.screenshot(filename=filename)
         print('截图成功保存至：', filename)
 
+    # 监控IM推送消息并点击进入后返回
+    def page_common_watch_IM(self):
+        self.driver.watcher().when('')
+
     """相册页面"""
 
     # 从相册导入照片
     def page_common_import_picture(self, photoNum):
-        self.click_ele(text='从相册导入')  # 点击“从相册导入”
+        self.click_ele_text(text='从相册导入')  # 点击“从相册导入”
         for i in range(photoNum):
-            self.get_ele(ID=common.photoID)[i].click()
-        self.click_ele(ID=common.useButtonID)
+            self.click_ele_ID(ID=common.photoID, index=i)
+        self.click_ele_ID(ID=common.useButtonID)
 
     # 相机按钮
     def page_common_click_camara(self):
-        self.click_ele(common.camaraButtonID)
+        self.click_ele_text(common.camaraButtonID)
 
     # 点击拍照按钮-拍照
     def page_common_take_photo(self):
-        self.click_ele(common.clickTakePhotoID)
+        self.click_ele_text(common.clickTakePhotoID)
 
     def page_common_take_video(self):
         time.sleep(2)
@@ -43,43 +47,32 @@ class Common(Base):
         """明细列表页面"""
 
     # 获取明细状态
-    def page_common_get_detail_status(self, statusIndex):
-        return self.get_ele(ID=common.detailStatusID)[statusIndex].get_text()
+    def page_common_get_detail_status(self, statusIndex=0):
+        return self.get_text_ID(ID=common.detailStatusID, index=statusIndex)
 
     # 点击明细名称进入明细详情
     def page_common_click_detail_name(self, detailName):
-        self.click_ele(text=detailName)
+        self.click_ele_text(text=detailName)
 
     # 右上角功能按钮
     def page_common_detail_click_right_button(self):
-        self.click_ele(ID=foot.rightButtonID)
+        self.click_ele_ID(ID=foot.rightButtonID)
 
     """明细详情页面"""
-
-    # 点击明细异常
-    def page_common_click_detail_abnormal(self, abnormal):
-        if self.get_ele(text='变形').exists:
-            self.click_ele(text=abnormal)
-        else:
-            while 1 == 1:
-                self.driver.swipe_ext('up', 1)
-                if self.get_ele(text='变形').exists:
-                    self.click_ele(text=abnormal)
-                    break
 
     # 批量选择明细
     def page_common_detail_select_all(self, footNum):
         for i in range(footNum):
-            self.get_ele(ID=common.detailSelectID)[i].click()
+            self.click_ele_ID(ID=common.detailSelectID, index=i)
 
     # 根据厂商名称筛选明细
     def page_common_detail_supplier_screen(self, supplier):
-        self.click_ele(text='厂商')
-        self.click_ele(text=supplier)
+        self.click_ele_text(text='厂商')
+        self.click_ele_text(text=supplier)
 
     # 点击添加明细按钮
     def page_common_detail_add_detail_button(self):
-        self.click_ele(ID=common.detaiAddButtonID)
+        self.click_ele_ID(ID=common.detaiAddButtonID)
 
     # 新增明细
     def page_common_detail_add_detail(self, detailMark, detailName, length, width, height, volume, weight, style):
@@ -95,14 +88,14 @@ class Common(Base):
         :param style:  包装形式
         """
         self.page_common_detail_add_detail_button()
-        self.send_key(text=detailMark, ID='com.mj.app.marsreport.pre:id/detail_mark')  # 输入件号
-        self.send_key(text=detailName, ID='com.mj.app.marsreport.pre:id/detail_name')  # 输入品名
-        self.send_key(text=length, ID='com.mj.app.marsreport.pre:id/import_length')  # 输入长
-        self.send_key(text=width, ID='com.mj.app.marsreport.pre:id/import_width')  # 输入宽
-        self.send_key(text=height, ID='com.mj.app.marsreport.pre:id/import_height')  # 输入高
-        self.send_key(text=volume, ID='com.mj.app.marsreport.pre:id/importVolume')  # 输入体积
-        self.send_key(text=weight, ID='com.mj.app.marsreport.pre:id/importWeight')  # 输入重量
-        self.send_key(text=style, ID='com.mj.app.marsreport.pre:id/packingStyle')  # 输入包装形式
+        self.send_key_ID(text=detailMark, ID='com.mj.app.marsreport.pre:id/detail_mark')  # 输入件号
+        self.send_key_ID(text=detailName, ID='com.mj.app.marsreport.pre:id/detail_name')  # 输入品名
+        self.send_key_ID(text=length, ID='com.mj.app.marsreport.pre:id/import_length')  # 输入长
+        self.send_key_ID(text=width, ID='com.mj.app.marsreport.pre:id/import_width')  # 输入宽
+        self.send_key_ID(text=height, ID='com.mj.app.marsreport.pre:id/import_height')  # 输入高
+        self.send_key_ID(text=volume, ID='com.mj.app.marsreport.pre:id/importVolume')  # 输入体积
+        self.send_key_ID(text=weight, ID='com.mj.app.marsreport.pre:id/importWeight')  # 输入重量
+        self.send_key_ID(text=style, ID='com.mj.app.marsreport.pre:id/packingStyle')  # 输入包装形式
 
     """业务组装"""
 
@@ -117,7 +110,7 @@ class Common(Base):
         # 点击任务名称进入任务
         while 1 == 1:
             if self.exists_ele_text(text=taskName):
-                self.click_ele(text=taskName)
+                self.click_ele_text(text=taskName)
                 break
             else:
                 self.driver.swipe_ext('up', 0.5)
@@ -138,7 +131,7 @@ class Common(Base):
     def page_common_create_pl_input(self, plNumber, number, volume, weight):
         self.pl.page_pl_send_pl_number(plNumber)
         self.pl.page_pl_send_data(number=number, volume=volume, weight=weight)
-        self.pl.click_ele(text='确定')
+        self.pl.click_ele_text(text='确定')
         print(self.driver.toast.get_message())
 
     # 新增PL(导入文件)
@@ -148,18 +141,18 @@ class Common(Base):
         self.pl.page_pl_send_pl_number(plNumber)
         self.pl.page_pl_click_select_file()
         if self.driver.exists(text=excelName):
-            self.click_ele(text=excelName)
-            self.click_ele(text='OK')
-            self.click_ele(text='确定')
+            self.click_ele_text(text=excelName)
+            self.click_ele_text(text='OK')
+            self.click_ele_text(text='确定')
             print(self.driver.toast.get_message())
         else:
-            self.click_ele(description='显示根目录')
-            self.click_ele(text='下载')
-            self.click_ele(text='pl模板')
+            self.click_ele_text(text='显示根目录')
+            self.click_ele_text(text='下载')
+            self.click_ele_text(text='pl模板')
             time.sleep(1)
-            self.click_ele(text=excelName)
-            self.click_ele(text='OK')
-            self.click_ele(text='确定')
+            self.click_ele_text(text=excelName)
+            self.click_ele_text(text='OK')
+            self.click_ele_text(text='确定')
             print(self.driver.toast.get_message())
 
     """任务相关"""
@@ -168,4 +161,4 @@ class Common(Base):
     def page_common_restart_app_go_task(self, packageName, taskName):
         self.restart_app(packageName)
         self.pageHome.page_click_task_button()
-        self.click_ele(text=taskName)
+        self.click_ele_text(text=taskName)

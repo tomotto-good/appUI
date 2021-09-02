@@ -35,4 +35,4 @@ class DetailList(Base):
 
     # 获取日报名称
     def page_detail_get_report_name(self):
-        return self.get_text(ID=foot.reportNameID)
+        return self.get_text_ID(ID=foot.reportNameID)

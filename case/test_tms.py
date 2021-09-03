@@ -157,8 +157,133 @@ class TestTms(unittest.TestCase):
                 self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
                 self.detailList.page_sign_save()
                 break
+            elif self.common.get_toast() in '系统繁忙，请稍后再试':
+                self.detailList.click_ele_text(text='确定并生成随车清单')
+                self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                self.detailList.page_sign_save()
+                break
             else:
                 self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
                 self.detailList.click_ele_text('鲁D 003')
                 self.detailList.click_ele_text('发车')
                 self.detailList.click_ele_text(text='确定并生成随车清单')
+        self.assertEqual(self.detailList.exists_ele_text('鲁D 003的装车报告.pdf'), True)
+
+    def test_tms_008(self):
+        """车次状态-卸车中"""
+
+        try:
+            self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+            self.common.click_ele_text(text='鲁D 002')
+            self.detailList.page_handle_detail_to_train('鹏2', '生锈')
+            self.detailList.page_handle_detail_to_train('鹏3', '生锈')
+            self.detailList.page_handle_detail_to_train('博', '生锈')
+            self.assertEqual(self.common.page_common_get_detail_status(0), '已装车')  # 断言
+            self.common.click_ele_text(text='发车')
+            self.common.click_ele_text(text='输入运费')
+            self.detailList.page_send_freight(222, 2)  # 输入运费并选择付款方式
+            self.detailList.click_ele_text(text='确定')
+            self.detailList.click_ele_text(text='确定并生成随车清单')
+            while True:
+                if self.detailList.exists_ele_text('清除'):  # 判断当前页面是否为签名页面
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                elif self.common.get_toast() in '系统繁忙，请稍后再试':
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                else:
+                    self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+                    self.detailList.click_ele_text('鲁D 002')
+                    self.detailList.click_ele_text('发车')
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+            self.assertEqual(self.detailList.exists_ele_text('鲁D 002的装车报告.pdf'), True)
+            self.detailList.click_back()  # 返回到车次列表
+            self.detailList.click_ele_text(text='卸车')  # 点击卸车按钮
+            self.detailList.click_ele_text(text='确定')
+            self.detailList.click_ele_text(text='鲁D 002')
+            self.detailList.page_handle_detail_to_unload_train('鹏2', '场地-鹏2')
+            self.detailList.page_handle_detail_to_unload_train('', '场地-')
+            self.detailList.page_handle_detail_to_unload_train('博', '场地-博')
+        except Exception as e:
+            raise e
+
+    def test_tms_008_01(self):
+        """车次状态-卸车中-整体照片"""
+        try:
+            self.common.click_ele_text(text='整体照片')
+            self.common.page_common_import_picture(2)
+            self.common.long_click(0.177, 0.261)  # 长按编辑
+            self.photo.page_send_photo_remark('卸车车次整体-货物')
+            self.photo.click_ele_text(text='确定')
+            self.common.long_click(0.492, 0.26)  # 长按编辑
+            self.photo.page_send_photo_remark('卸车车次整体-签收单')
+            self.photo.click_ele_text(text='签收单')
+            self.photo.click_ele_text(text='确定')
+        except Exception as e:
+            raise e
+
+    def test_tms_009(self):
+        """车次状态-已签收"""
+        try:
+            """待装车"""
+            self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+            self.common.click_ele_text(text='鲁D 001')
+            self.detailList.page_handle_detail_to_train('GP-3', '生锈')
+            self.detailList.page_handle_detail_to_train('GP-4', '生锈')
+            self.detailList.page_handle_detail_to_train('GP-5', '生锈')
+            self.assertEqual(self.common.page_common_get_detail_status(0), '已装车')  # 断言
+            """装车中"""
+            self.common.click_ele_text(text='发车')
+            self.common.click_ele_text(text='输入运费')
+            self.detailList.page_send_freight(333, 3)  # 输入运费并选择付款方式
+            self.detailList.click_ele_text(text='确定')
+            self.detailList.click_ele_text(text='确定并生成随车清单')
+            while True:
+                if self.detailList.exists_ele_text('清除'):  # 判断当前页面是否为签名页面
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                elif self.common.get_toast() in '系统繁忙，请稍后再试':
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                else:
+                    self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+                    self.detailList.click_ele_text('鲁D 001')
+                    self.detailList.click_ele_text('发车')
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+            self.assertEqual(self.detailList.exists_ele_text('鲁D 001的装车报告.pdf'), True)
+            """已发车"""
+            self.detailList.click_back()  # 返回到车次列表
+            self.detailList.click_ele_text(text='卸车')  # 点击卸车按钮
+            self.detailList.click_ele_text(text='确定')
+            """卸车中"""
+            self.detailList.click_ele_text(text='鲁D 001')
+            self.detailList.page_handle_detail_to_unload_train('GP-3', '场地-GP-3')
+            self.detailList.page_handle_detail_to_unload_train('GP-4', '场地-GP-4')
+            self.detailList.page_handle_detail_to_unload_train('GP-5', '场地-GP-5')
+            self.test_tms_008_01()  # 导入整体照片
+            self.detailList.click_back()  # 返回到明细列表
+            self.detailList.click_ele_text(text='生成卸车清单')
+            while True:
+                if self.detailList.exists_ele_text('清除'):  # 判断当前页面是否为签名页面
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                elif str(self.common.get_toast()) in '系统繁忙，请稍后再试':
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+                    self.detailList.driver.drag(0.112, 0.583, 0.692, 0.58)  # 签名
+                    self.detailList.page_sign_save()
+                    break
+                else:
+                    self.common.page_common_restart_app_go_task(self.packageName, self.taskName)
+                    self.detailList.click_ele_text('鲁D 001')
+                    self.detailList.click_ele_text('发车')
+                    self.detailList.click_ele_text(text='确定并生成随车清单')
+            self.assertEqual(self.detailList.exists_ele_text('鲁D 001的卸车报告.pdf'), True)
+        except Exception as e:
+            raise e

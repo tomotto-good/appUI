@@ -8,6 +8,7 @@ prePayID = 'com.mj.app.marsreport.test:id/pre_pay'  # 预付
 toPayID = 'com.mj.app.marsreport.test:id/to_pay'  # 到付
 receiptPayID = 'com.mj.app.marsreport.test:id/receipt_pay'  # 回单付
 saveID = 'com.mj.app.marsreport.test:id/save'  # 签名页面保存按钮
+addressID = 'com.mj.app.marsreport.test:id/address'  # 明细详情页面场地录入框
 
 
 class TmsDetailList(Base):
@@ -24,13 +25,20 @@ class TmsDetailList(Base):
     def page_get_detail_status(self, index=0):
         return self.get_text_ID(detailStatusID, index=index)
 
-    # 进入明细详情，导入图片，选择异常,明细状态变为已装车
+    # 装车前-进入明细详情，导入图片，选择异常,明细状态变为已装车
     def page_handle_detail_to_train(self, shippingMark, abnormalName):
         self.click_ele_text(text=shippingMark)
         self.common.page_common_import_picture(9)
         self.click_ele_text(text='装载过程')
         self.common.page_common_import_picture(9)
         self.click_ele_text(text=abnormalName)
+        self.click_ele_text(text='保存')
+
+    # 进入卸车详情页面-录入场地，导入图片
+    def page_handle_detail_to_unload_train(self, shippingMark, addressName):
+        self.click_ele_text(text=shippingMark)
+        self.send_key_ID(text=addressName, ID=addressID)
+        self.common.page_common_import_picture(9)
         self.click_ele_text(text='保存')
 
     # 输入运费并点击付款方式

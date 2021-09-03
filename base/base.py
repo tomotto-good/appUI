@@ -1,12 +1,11 @@
 import time
-
 import uiautomator2
 
 
 class Base:
 
     def __init__(self):
-        self.driver = uiautomator2.connect('SQRNW17927003213')  # b182d0da,SQRNW17927003213,926QADV7222QM
+        self.driver = uiautomator2.connect('926QADV7222QM')  # b182d0da,SQRNW17927003213,926QADV7222QM
         # self.driver = uiautomator2.connect_adb_wifi('192.168.1.227')  # viVo：192.168.1.164 华为：192.168.1.227
 
     # 循环查找ID元素5次，没有找到向下滑动，找到后点击
@@ -124,4 +123,7 @@ class Base:
     def long_click(self, x, y):
         time.sleep(1)
         self.driver.long_click(x, y, duration=1)
-    #
+
+    def click_back(self):
+        time.sleep(1)
+        self.driver.press('back')

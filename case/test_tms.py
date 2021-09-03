@@ -81,7 +81,6 @@ class TestTms(unittest.TestCase):
     def test_tms_005(self):
         """车次状态-预装车"""
         try:
-
             self.common.page_common_restart_app_go_task(self.packageName, self.taskName)  # 重启app并进入任务
             self.common.click_ele_text(text='确认并开始任务')
             time.sleep(1)
